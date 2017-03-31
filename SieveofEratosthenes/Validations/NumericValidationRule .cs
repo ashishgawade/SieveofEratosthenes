@@ -15,8 +15,8 @@ namespace SieveofEratosthenes.Validations
             if (string.IsNullOrEmpty(strValue))
                 return new ValidationResult(false, "Input is required.");
 
-            if (string.IsNullOrWhiteSpace(strValue.Trim('0')))
-                return new ValidationResult(false, "Input is required.");
+            if (string.IsNullOrWhiteSpace(strValue.Trim('0')) || string.IsNullOrWhiteSpace(strValue.Trim('1')))
+                return new ValidationResult(false, "Input is invalid.");
 
 
             if (IsTextAllowed(strValue))
@@ -24,9 +24,13 @@ namespace SieveofEratosthenes.Validations
                 bool canConvert = false;
                 switch (ValidationType.Name)
                 {
-                    case "UInt32":
-                        Int64 longVal = 0;
-                        canConvert = Int64.TryParse(strValue, out longVal);
+                    case "Int32":
+                        Int32 longVal = 0;
+                        canConvert = Int32.TryParse(strValue, out longVal);
+                        if(longVal > 1000000000)
+                        {
+                            return new ValidationResult(false, "Input cannot be bigger than 1 Billion.");
+                        }
                         return canConvert
                                    ? new ValidationResult(true, null)
                                    : new ValidationResult(false, "Input value is invalid");

@@ -222,11 +222,11 @@ namespace SieveofEratosthenes.ViewModels
 
                 stopWatch.Start();
 
-                var upperLimit = Convert.ToUInt32(MaxPrimeNumber);
+                var upperLimit = Convert.ToInt32(MaxPrimeNumber);
 
                 var indexNumber = 2; //Assumption based on Sieve
 
-                var numberBitArray = new BitArray((int) (upperLimit + 1));
+                var numberBitArray = new BitArray((int)(upperLimit + 1));
 
                 _listOfPrimeNumbers = new List<int>();
 
@@ -266,19 +266,23 @@ namespace SieveofEratosthenes.ViewModels
         {
             CurrentPageIndex--;
             if (_displayData != null && _displayData.Any())
+            {
                 _displayData.Clear();
 
-            var showDataFrom = (_currentPageIndex == 0) ? 0 : CurrentPageIndex*_itemsPerPage;
-            var showDataTill = (_currentPageIndex == 0) ? _itemsPerPage -1 : _itemsPerPage * (CurrentPageIndex + 1) - 1;
+                var showDataFrom = (_currentPageIndex == 0) ? 0 : CurrentPageIndex*_itemsPerPage;
+                var showDataTill = (_currentPageIndex == 0)
+                                       ? _itemsPerPage - 1
+                                       : _itemsPerPage*(CurrentPageIndex + 1) - 1;
 
-            for (int i = showDataFrom; i <= showDataTill; i++)
-            {
-                if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                for (int i = showDataFrom; i <= showDataTill; i++)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[i]);
+                    if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                    {
+                        _displayData.Add(_listOfPrimeNumbers[i]);
+                    }
                 }
+                NotifyPropertyChanged("DisplayData");
             }
-            NotifyPropertyChanged("DisplayData");
         }
 
         public void ShowNextPage()
@@ -293,9 +297,9 @@ namespace SieveofEratosthenes.ViewModels
 
                 for (int i = showDataFrom; i <= showDataTill; i++)
                 {
-                    if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                    if (_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
                     {
-                        _displayData.Add(_listOfPrimeNumbers[i]);
+                        _displayData.Add(_listOfPrimeNumbers[(int) i]);
                     }
                 }
                 NotifyPropertyChanged("DisplayData");
@@ -313,9 +317,9 @@ namespace SieveofEratosthenes.ViewModels
 
             for (int i = 0; i < _itemsPerPage ; i++)
             {
-                if(_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                if(_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[i]);
+                    _displayData.Add(_listOfPrimeNumbers[(int) i]);
                 }
             }
             NotifyPropertyChanged("DisplayData");
@@ -332,9 +336,9 @@ namespace SieveofEratosthenes.ViewModels
 
             for (int i = showDataFrom; i < showDataTill; i++)
             {
-                if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                if (_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[i]);
+                    _displayData.Add(_listOfPrimeNumbers[(int) i]);
                 }
             }
             NotifyPropertyChanged("DisplayData");
@@ -344,11 +348,11 @@ namespace SieveofEratosthenes.ViewModels
         {
             if (_listOfPrimeNumbers.Count % _itemsPerPage == 0)
             {
-                TotalPages = (_listOfPrimeNumbers.Count / _itemsPerPage);
+                TotalPages = (_listOfPrimeNumbers.Count / (int) _itemsPerPage);
             }
             else
             {
-                TotalPages = (_listOfPrimeNumbers.Count / _itemsPerPage) + 1;
+                TotalPages = (_listOfPrimeNumbers.Count / (int) _itemsPerPage) + 1;
             }
         }
 
