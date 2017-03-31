@@ -1,9 +1,9 @@
 ﻿<Application x:Class="SieveofEratosthenes.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:SieveofEratosthenes"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewmodel="clr-namespace:SieveofEratosthenes.ViewModels"
+             StartupUri="/Views/HomeView.xaml">
     <Application.Resources>
-        <vm:ViewModel x:Key="test"/>
+        <viewmodel:HomeViewModel x:Key="HomeViewModel"/>
     </Application.Resources>
 </Application>
