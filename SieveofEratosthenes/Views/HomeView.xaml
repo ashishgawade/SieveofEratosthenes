@@ -29,7 +29,7 @@
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
     </Window.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <!--<wpftoolkit:BusyIndicator x:Name="ProgressIndicator" IsBusy="{Binding IsBusy}" BusyContent="{Binding WaitMessage}">-->
+        <wpftoolkit:BusyIndicator x:Name="ProgressIndicator" IsBusy="{Binding IsBusy}" BusyContent="{Binding WaitMessage}">
         <Grid Margin="5" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -109,6 +109,6 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-    <!--</wpftoolkit:BusyIndicator>-->
+    </wpftoolkit:BusyIndicator>
     </ScrollViewer>
 </Window>
