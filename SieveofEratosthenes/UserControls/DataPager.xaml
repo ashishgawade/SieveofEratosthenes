@@ -17,7 +17,12 @@
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
         <Button Content="First" Command="{Binding FirstPageCommand}"/>
         <Button Content="Previous" Command="{Binding PreviousPageCommand}"/>
-        <TextBlock Width="auto" Text="{Binding CurrentPage}"/>
+        <TextBlock Text="Page"/>
+        <TextBox Width="60" Text="{Binding CurrentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding DisplayRequestedPageCommand}" Key="Return" />
+                </TextBox.InputBindings>
+        </TextBox>
         <TextBlock Text="of"/>
         <TextBlock Width="auto" Text="{Binding TotalPages}"/>
         <Button Content="Next" Command="{Binding NextPageCommand}"/>

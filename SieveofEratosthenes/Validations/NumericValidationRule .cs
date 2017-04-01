@@ -15,7 +15,7 @@ namespace SieveofEratosthenes.Validations
             if (string.IsNullOrEmpty(strValue))
                 return new ValidationResult(false, "Input is required.");
 
-            if (string.IsNullOrWhiteSpace(strValue.Trim('0')) || string.IsNullOrWhiteSpace(strValue.Trim('1')))
+            if (string.IsNullOrWhiteSpace(strValue.Trim('0')) || strValue.TrimStart('0') == "1")
                 return new ValidationResult(false, "Input is invalid.");
 
 

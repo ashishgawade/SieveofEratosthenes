@@ -18,6 +18,7 @@ namespace SieveofEratosthenes.ViewModels
         public RelayCommand NextPageCommand { get; private set; }
         public RelayCommand FirstPageCommand { get; private set; }
         public RelayCommand LastPageCommand { get; private set; }
+        public RelayCommand DisplayRequestedPageCommand { get; private set; }
 
         #endregion
 
@@ -29,8 +30,11 @@ namespace SieveofEratosthenes.ViewModels
             NextPageCommand = new RelayCommand(ShowNextPage);
             FirstPageCommand = new RelayCommand(ShowFirstPage);
             LastPageCommand = new RelayCommand(ShowLastPage);
+            DisplayRequestedPageCommand = new RelayCommand( DisplayUserRequestedPageData);
             GeneratePrimeNumbersCommand = new RelayCommand(GeneratePrimeNumbers);
         }
+
+        
 
         #endregion
 
@@ -109,9 +113,18 @@ namespace SieveofEratosthenes.ViewModels
             }
         }
 
+        public int _currentPage = 1;
         public int CurrentPage
         {
-            get { return _currentPageIndex + 1; }
+            get { return _currentPage; }
+            set
+            {
+                if (value > 0)
+                {
+                    _currentPage = value;
+                    NotifyPropertyChanged("CurrentPage");
+                }
+            }
         }
 
         private int _totalPages;
@@ -265,6 +278,7 @@ namespace SieveofEratosthenes.ViewModels
         public void ShowPreviousPage()
         {
             CurrentPageIndex--;
+            CurrentPage--;
             if (_displayData != null && _displayData.Any())
             {
                 _displayData.Clear();
@@ -288,6 +302,7 @@ namespace SieveofEratosthenes.ViewModels
         public void ShowNextPage()
         {
             CurrentPageIndex++;
+            CurrentPage++;
             if (_displayData != null && _displayData.Any())
             {
                 _displayData.Clear();
@@ -322,6 +337,7 @@ namespace SieveofEratosthenes.ViewModels
                     _displayData.Add(_listOfPrimeNumbers[(int) i]);
                 }
             }
+            CurrentPage = CurrentPageIndex + 1;
             NotifyPropertyChanged("DisplayData");
         }
 
@@ -342,6 +358,26 @@ namespace SieveofEratosthenes.ViewModels
                 }
             }
             NotifyPropertyChanged("DisplayData");
+        }
+
+        private void  DisplayUserRequestedPageData()
+        {
+            CurrentPageIndex = CurrentPage - 1;
+            if (_displayData != null && _displayData.Any())
+                _displayData.Clear();
+
+            var showDataFrom = CurrentPageIndex * _itemsPerPage;
+            var showDataTill = _itemsPerPage * (CurrentPageIndex + 1) - 1;
+
+            for (int i = showDataFrom; i <= showDataTill; i++)
+            {
+                if (_listOfPrimeNumbers != null &&_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
+                {
+                    _displayData.Add(_listOfPrimeNumbers[(int)i]);
+                }
+            }
+            NotifyPropertyChanged("DisplayData");
+
         }
 
         private void CalculateTotalPages()
