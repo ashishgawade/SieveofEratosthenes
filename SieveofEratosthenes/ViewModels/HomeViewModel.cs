@@ -119,7 +119,7 @@ namespace SieveofEratosthenes.ViewModels
             get { return _currentPage; }
             set
             {
-                if (value > 0)
+                if (value > 0 && value <= TotalPages)
                 {
                     _currentPage = value;
                     NotifyPropertyChanged("CurrentPage");
@@ -277,8 +277,9 @@ namespace SieveofEratosthenes.ViewModels
 
         public void ShowPreviousPage()
         {
-            CurrentPageIndex--;
             CurrentPage--;
+            CurrentPageIndex--;
+
             if (_displayData != null && _displayData.Any())
             {
                 _displayData.Clear();
@@ -297,12 +298,15 @@ namespace SieveofEratosthenes.ViewModels
                 }
                 NotifyPropertyChanged("DisplayData");
             }
+
+            CurrentPage = CurrentPageIndex + 1;
         }
 
         public void ShowNextPage()
         {
-            CurrentPageIndex++;
             CurrentPage++;
+            CurrentPageIndex++;
+            
             if (_displayData != null && _displayData.Any())
             {
                 _displayData.Clear();
@@ -319,6 +323,8 @@ namespace SieveofEratosthenes.ViewModels
                 }
                 NotifyPropertyChanged("DisplayData");
             }
+
+            CurrentPage = CurrentPageIndex + 1;
         }
 
         public void ShowFirstPage()
@@ -377,6 +383,7 @@ namespace SieveofEratosthenes.ViewModels
                 }
             }
             NotifyPropertyChanged("DisplayData");
+            NotifyPropertyChanged("CurrentPage");
 
         }
 
