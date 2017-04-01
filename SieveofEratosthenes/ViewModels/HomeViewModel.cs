@@ -44,13 +44,22 @@ namespace SieveofEratosthenes.ViewModels
 
         #region Properties
 
-        private string _helloMessage = "Hello from VM";
-        public string HelloMessage
+        private string _displayedDataMessage;
+        public string DisplayedDataMessage
         {
-            get { return _helloMessage; }
-            set { 
-                _helloMessage = "Hii from command";
-                NotifyPropertyChanged("HelloMessage");
+            get { return _displayedDataMessage; }
+            set {
+                    _displayedDataMessage = value;
+                NotifyPropertyChanged("DisplayedDataMessage");
+            }
+        }
+
+        private bool _isDataVisible;
+        public bool IsDataVisible
+        {
+            get { return _isDataVisible; }
+            set { _isDataVisible = value;
+            NotifyPropertyChanged("IsDataVisible");
             }
         }
 
@@ -189,6 +198,7 @@ namespace SieveofEratosthenes.ViewModels
             ShowFirstPage();
             SetDataPagerButtonVisibility();
             IsBusy = false;
+            IsDataVisible = true;
         }
 
         private void SetDataPagerButtonVisibility()
@@ -198,7 +208,7 @@ namespace SieveofEratosthenes.ViewModels
                 FirstPageCommand.SetCanExecute(false);
                 PreviousPageCommand.SetCanExecute(false);
 
-                if (TotalPages == CurrentPage)
+                if (TotalPages == CurrentPageIndex + 1)
                 {
                     NextPageCommand.SetCanExecute(false);
                     LastPageCommand.SetCanExecute(false);
@@ -209,7 +219,7 @@ namespace SieveofEratosthenes.ViewModels
                     LastPageCommand.SetCanExecute(true);
                 }
             }
-            else if(CurrentPage == TotalPages)
+            else if(CurrentPageIndex + 1 == TotalPages)
             {
                 NextPageCommand.SetCanExecute(false);
                 LastPageCommand.SetCanExecute(false);
@@ -300,6 +310,7 @@ namespace SieveofEratosthenes.ViewModels
             }
 
             CurrentPage = CurrentPageIndex + 1;
+            ShowUserMessage();
         }
 
         public void ShowNextPage()
@@ -325,11 +336,14 @@ namespace SieveofEratosthenes.ViewModels
             }
 
             CurrentPage = CurrentPageIndex + 1;
+            ShowUserMessage();
         }
 
         public void ShowFirstPage()
         {
+            CurrentPage = 1;
             CurrentPageIndex = 0;
+
             if(_displayData != null && _displayData.Any())
                 _displayData.Clear();
 
@@ -345,11 +359,14 @@ namespace SieveofEratosthenes.ViewModels
             }
             CurrentPage = CurrentPageIndex + 1;
             NotifyPropertyChanged("DisplayData");
+            ShowUserMessage();
         }
 
         public void ShowLastPage()
         {
+            CurrentPage = TotalPages;
             CurrentPageIndex = TotalPages - 1;
+            
             if (_displayData != null && _displayData.Any())
                 _displayData.Clear();
 
@@ -364,6 +381,8 @@ namespace SieveofEratosthenes.ViewModels
                 }
             }
             NotifyPropertyChanged("DisplayData");
+            NotifyPropertyChanged("CurrentPageIndex");
+            ShowUserMessage();
         }
 
         private void  DisplayUserRequestedPageData()
@@ -397,6 +416,11 @@ namespace SieveofEratosthenes.ViewModels
             {
                 TotalPages = (_listOfPrimeNumbers.Count / (int) _itemsPerPage) + 1;
             }
+        }
+
+        private void ShowUserMessage()
+        {
+            DisplayedDataMessage = String.Format("Displaying first {0} prime numbers", CurrentPage*_itemsPerPage);
         }
 
 
