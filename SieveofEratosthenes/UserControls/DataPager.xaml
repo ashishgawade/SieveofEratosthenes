@@ -8,9 +8,13 @@
         <Style TargetType="Button">
             <Setter Property="Margin" Value="5" />
             <Setter Property="Width" Value="80" />
-            <Setter Property="Foreground" Value="Maroon"/>
             <Setter Property="Focusable" Value="False"/>
-            
+            <Setter Property="Foreground" Value="Maroon"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
@@ -33,7 +37,7 @@
             <Button Content="Next" Command="{Binding NextPageCommand}"/>
             <Button Content="Last" Command="{Binding LastPageCommand}"/>
         </StackPanel>
-        <!--<TextBlock Text="{Binding DisplayedDataMessage}" HorizontalAlignment="Left" DockPanel.Dock="Left"/>-->
+        <Button Content="Export to csv" Command="{Binding ExportToCsvCommand}" HorizontalAlignment="Left" DockPanel.Dock="Left"/>
         
     </DockPanel>
 </UserControl>

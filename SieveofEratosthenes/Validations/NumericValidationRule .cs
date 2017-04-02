@@ -21,12 +21,11 @@ namespace SieveofEratosthenes.Validations
 
             if (IsTextAllowed(strValue))
             {
-                bool canConvert = false;
                 switch (ValidationType.Name)
                 {
                     case "Int32":
-                        Int32 longVal = 0;
-                        canConvert = Int32.TryParse(strValue, out longVal);
+                        Int32 longVal;
+                        bool canConvert = Int32.TryParse(strValue, out longVal);
                         if(longVal > 1000000000)
                         {
                             return new ValidationResult(false, "Input cannot be bigger than 1 Billion.");

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 using SieveofEratosthenes.Commands;
 using System.Linq;
 
@@ -13,12 +15,13 @@ namespace SieveofEratosthenes.ViewModels
     {
         #region Commands
 
-        public RelayCommand GeneratePrimeNumbersCommand { get; set; }
+        public RelayCommand GeneratePrimeNumbersCommand { get; private set; }
         public RelayCommand PreviousPageCommand { get; private set; }
         public RelayCommand NextPageCommand { get; private set; }
         public RelayCommand FirstPageCommand { get; private set; }
         public RelayCommand LastPageCommand { get; private set; }
         public RelayCommand DisplayRequestedPageCommand { get; private set; }
+        public RelayCommand ExportToCsvCommand { get; private set; }
 
         #endregion
 
@@ -32,27 +35,12 @@ namespace SieveofEratosthenes.ViewModels
             LastPageCommand = new RelayCommand(ShowLastPage);
             DisplayRequestedPageCommand = new RelayCommand( DisplayUserRequestedPageData);
             GeneratePrimeNumbersCommand = new RelayCommand(GeneratePrimeNumbers);
+            ExportToCsvCommand = new RelayCommand(ExportDataToCsv);
         }
-
-        
-
-        #endregion
-
-        #region Public Methods
 
         #endregion
 
         #region Properties
-
-        private string _displayedDataMessage;
-        public string DisplayedDataMessage
-        {
-            get { return _displayedDataMessage; }
-            set {
-                    _displayedDataMessage = value;
-                NotifyPropertyChanged("DisplayedDataMessage");
-            }
-        }
 
         private bool _isDataVisible;
         public bool IsDataVisible
@@ -64,7 +52,6 @@ namespace SieveofEratosthenes.ViewModels
         }
 
         private ObservableCollection<int> _displayData;
-
         public ObservableCollection<int> DisplayData
         {
             get { return _displayData; }
@@ -167,7 +154,7 @@ namespace SieveofEratosthenes.ViewModels
         #region Private Variables
 
         private readonly BackgroundWorker _worker = new BackgroundWorker();
-        private int _itemsPerPage = 100;
+        private const int ItemsPerPage = 100;
         private List<int> _listOfPrimeNumbers;
 
         #endregion
@@ -241,15 +228,11 @@ namespace SieveofEratosthenes.ViewModels
         {
             try
             {
-                var stopWatch = new Stopwatch();
-
-                stopWatch.Start();
-
                 var upperLimit = Convert.ToInt32(MaxPrimeNumber);
 
                 var indexNumber = 2; //Assumption based on Sieve
 
-                var numberBitArray = new BitArray((int)(upperLimit + 1));
+                var numberBitArray = new BitArray(upperLimit + 1);
 
                 _listOfPrimeNumbers = new List<int>();
 
@@ -272,10 +255,6 @@ namespace SieveofEratosthenes.ViewModels
                     indexNumber++;
                 }
 
-                stopWatch.Stop();
-
-                var time = stopWatch.ElapsedMilliseconds;
-
                 NotifyPropertyChanged("ListOfPrimeNumbers");
                 
             }
@@ -294,10 +273,10 @@ namespace SieveofEratosthenes.ViewModels
             {
                 _displayData.Clear();
 
-                var showDataFrom = (_currentPageIndex == 0) ? 0 : CurrentPageIndex*_itemsPerPage;
+                var showDataFrom = (_currentPageIndex == 0) ? 0 : CurrentPageIndex*ItemsPerPage;
                 var showDataTill = (_currentPageIndex == 0)
-                                       ? _itemsPerPage - 1
-                                       : _itemsPerPage*(CurrentPageIndex + 1) - 1;
+                                       ? ItemsPerPage - 1
+                                       : ItemsPerPage*(CurrentPageIndex + 1) - 1;
 
                 for (int i = showDataFrom; i <= showDataTill; i++)
                 {
@@ -310,7 +289,6 @@ namespace SieveofEratosthenes.ViewModels
             }
 
             CurrentPage = CurrentPageIndex + 1;
-            ShowUserMessage();
         }
 
         public void ShowNextPage()
@@ -322,21 +300,20 @@ namespace SieveofEratosthenes.ViewModels
             {
                 _displayData.Clear();
 
-                var showDataFrom = CurrentPageIndex*_itemsPerPage;
-                var showDataTill = _itemsPerPage*(CurrentPageIndex + 1) - 1;
+                var showDataFrom = CurrentPageIndex*ItemsPerPage;
+                var showDataTill = ItemsPerPage*(CurrentPageIndex + 1) - 1;
 
                 for (int i = showDataFrom; i <= showDataTill; i++)
                 {
-                    if (_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
+                    if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
                     {
-                        _displayData.Add(_listOfPrimeNumbers[(int) i]);
+                        _displayData.Add(_listOfPrimeNumbers[i]);
                     }
                 }
                 NotifyPropertyChanged("DisplayData");
             }
 
             CurrentPage = CurrentPageIndex + 1;
-            ShowUserMessage();
         }
 
         public void ShowFirstPage()
@@ -350,16 +327,15 @@ namespace SieveofEratosthenes.ViewModels
             if(_displayData == null)
                 _displayData = new ObservableCollection<int>();
 
-            for (int i = 0; i < _itemsPerPage ; i++)
+            for (int i = 0; i < ItemsPerPage ; i++)
             {
-                if(_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
+                if(_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[(int) i]);
+                    _displayData.Add(_listOfPrimeNumbers[i]);
                 }
             }
             CurrentPage = CurrentPageIndex + 1;
             NotifyPropertyChanged("DisplayData");
-            ShowUserMessage();
         }
 
         public void ShowLastPage()
@@ -370,19 +346,18 @@ namespace SieveofEratosthenes.ViewModels
             if (_displayData != null && _displayData.Any())
                 _displayData.Clear();
 
-            var showDataFrom = CurrentPageIndex * _itemsPerPage;
-            var showDataTill = _itemsPerPage * (CurrentPageIndex + 1) - 1;
+            var showDataFrom = CurrentPageIndex * ItemsPerPage;
+            var showDataTill = ItemsPerPage * (CurrentPageIndex + 1) - 1;
 
             for (int i = showDataFrom; i < showDataTill; i++)
             {
-                if (_listOfPrimeNumbers.ElementAtOrDefault((int) i) != 0)
+                if (_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[(int) i]);
+                    _displayData.Add(_listOfPrimeNumbers[i]);
                 }
             }
             NotifyPropertyChanged("DisplayData");
             NotifyPropertyChanged("CurrentPageIndex");
-            ShowUserMessage();
         }
 
         private void  DisplayUserRequestedPageData()
@@ -391,14 +366,14 @@ namespace SieveofEratosthenes.ViewModels
             if (_displayData != null && _displayData.Any())
                 _displayData.Clear();
 
-            var showDataFrom = CurrentPageIndex * _itemsPerPage;
-            var showDataTill = _itemsPerPage * (CurrentPageIndex + 1) - 1;
+            var showDataFrom = CurrentPageIndex * ItemsPerPage;
+            var showDataTill = ItemsPerPage * (CurrentPageIndex + 1) - 1;
 
             for (int i = showDataFrom; i <= showDataTill; i++)
             {
                 if (_listOfPrimeNumbers != null &&_listOfPrimeNumbers.ElementAtOrDefault(i) != 0)
                 {
-                    _displayData.Add(_listOfPrimeNumbers[(int)i]);
+                    _displayData.Add(_listOfPrimeNumbers[i]);
                 }
             }
             NotifyPropertyChanged("DisplayData");
@@ -408,21 +383,49 @@ namespace SieveofEratosthenes.ViewModels
 
         private void CalculateTotalPages()
         {
-            if (_listOfPrimeNumbers.Count % _itemsPerPage == 0)
+            if (_listOfPrimeNumbers.Count % ItemsPerPage == 0)
             {
-                TotalPages = (_listOfPrimeNumbers.Count / (int) _itemsPerPage);
+                TotalPages = (_listOfPrimeNumbers.Count / ItemsPerPage);
             }
             else
             {
-                TotalPages = (_listOfPrimeNumbers.Count / (int) _itemsPerPage) + 1;
+                TotalPages = (_listOfPrimeNumbers.Count / ItemsPerPage) + 1;
             }
         }
-
-        private void ShowUserMessage()
+        
+        private void ExportDataToCsv()
         {
-            DisplayedDataMessage = String.Format("Displaying first {0} prime numbers", CurrentPage*_itemsPerPage);
+            try
+            {
+                var saveFileDialog = new SaveFileDialog {Filter = "csv files (*.csv)|*.csv"};
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (var sw = new StreamWriter(saveFileDialog.FileName)) 
+                    {
+                        if(_listOfPrimeNumbers != null && _listOfPrimeNumbers.Any())
+                        {
+                            for (int i = 1; i <= _listOfPrimeNumbers.Count; i++)
+                            {
+                                if(i % 50 == 0)
+                                {
+                                    sw.WriteLine(_listOfPrimeNumbers[i - 1].ToString());
+                                }
+                                else
+                                {
+                                    sw.Write(_listOfPrimeNumbers[i - 1].ToString());
+                                    if (i != _listOfPrimeNumbers.Count)
+                                        sw.Write(",");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
-
 
         #endregion
 
