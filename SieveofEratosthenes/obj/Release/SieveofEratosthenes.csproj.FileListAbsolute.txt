@@ -24,3 +24,6 @@ C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\Sieve
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Release\SieveofEratosthenes.exe
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Release\SieveofEratosthenes.pdb
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Release\SieveofEratosthenes.csprojResolveAssemblyReference.cache
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Release\SieveofEratosthenes.exe.config
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Release\SieveofEratosthenes.exe
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Release\SieveofEratosthenes.pdb

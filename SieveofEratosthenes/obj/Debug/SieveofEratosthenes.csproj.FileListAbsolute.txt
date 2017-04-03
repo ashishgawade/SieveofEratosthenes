@@ -24,3 +24,29 @@ C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\Sieve
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.Properties.Resources.en.resources
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\ru\SieveofEratosthenes.resources.dll
 C:\Users\agawade\Documents\Visual Studio 2012\Personal\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\en\SieveofEratosthenes.resources.dll
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\SieveofEratosthenes.exe.config
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.exe
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.pdb
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\SieveofEratosthenes.exe
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\SieveofEratosthenes.pdb
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\ru\SieveofEratosthenes.resources.dll
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\en\SieveofEratosthenes.resources.dll
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.csprojResolveAssemblyReference.cache
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\UserControls\DataPager.baml
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\UserControls\DataPager.g.cs
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\Views\HomeView.g.cs
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\App.g.cs
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes_Content.g.cs
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes_MarkupCompile.cache
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes_MarkupCompile.lref
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\App.baml
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\Views\HomeView.baml
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.g.resources
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.Properties.Resources.resources
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.Properties.Resources.ru.resources
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.Properties.Resources.en.resources
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\SieveofEratosthenes.csproj.GenerateResource.Cache
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\ru\SieveofEratosthenes.resources.dll
+C:\Users\agawade\Desktop\SieveofEratosthenes\SieveofEratosthenes\obj\Debug\en\SieveofEratosthenes.resources.dll
